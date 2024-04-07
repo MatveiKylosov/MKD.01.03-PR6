@@ -1,6 +1,7 @@
 package com.example.singin_kylosov;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,12 +14,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        setContentView(R.layout.signin);
+    }
+
+    public int start_x=0;
+
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                start_x=(int)event.getX();
+                break;
+
+            case MotionEvent.ACTION_UP:
+                if(Math.abs((int)event.getX() - start_x) > 50){
+                    if(start_x < (int)event.getX()){
+                        setContentView(R.layout.signin);
+                    } else {
+                      setContentView(R.layout.regin);
+                    }
+                }
+                break;
+        }
+        return false;
     }
 }
