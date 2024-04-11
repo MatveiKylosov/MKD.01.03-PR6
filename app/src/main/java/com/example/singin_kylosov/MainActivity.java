@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         //                System.out.println("Ошибка!");
 
         public void saveFile() {
-            String fileName = "testFile.txt";
+            String fileName = "LoginPassword.txt";
             String fileContents = "login="+login+"&password="+password;
             FileOutputStream outputStream;
 
