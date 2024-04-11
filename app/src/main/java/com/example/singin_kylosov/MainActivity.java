@@ -18,7 +18,9 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import android.os.Environment;
+import java.io.File;
+import java.io.FileOutputStream;
 public class MainActivity extends AppCompatActivity {
     public class DataUser {
         public String id;
@@ -93,6 +95,27 @@ public class MainActivity extends AppCompatActivity {
 
             return null;
         }
+        //                System.out.println("Ошибка!");
+
+        public void saveFile() {
+            String fileName = "testFile.txt";
+            String fileContents = "login="+login+"&password="+password;
+            FileOutputStream outputStream;
+
+            try {
+                File file = new File(Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_DOWNLOADS), fileName);
+                outputStream = new FileOutputStream(file);
+                outputStream.write(fileContents.getBytes());
+                outputStream.close();
+            } catch (Exception e) {
+                System.out.println("!--------------------");
+                e.printStackTrace();
+                System.out.println("--------------------!");
+            }
+        }
+
+
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
@@ -113,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (dataUser.size() != 0) {
                         AlertDialog("Авторизация", "Пользователь авторизован.");
+                        saveFile();
                     }
                 } else AlertDialog("Авторизация", "Пользователя с таким логином и паролем не существует.");
             } catch (JSONException e) {
