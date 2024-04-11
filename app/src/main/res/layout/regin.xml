@@ -31,6 +31,7 @@
 
     <EditText
         android:id="@+id/ReginLogin"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
@@ -57,6 +58,7 @@
     <EditText
         android:id="@+id/ReginPassword"
         android:layout_width="match_parent"
+        android:textColor="@color/black"
         android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
@@ -83,6 +85,7 @@
     <EditText
         android:id="@+id/repeatPassword"
         android:layout_width="match_parent"
+        android:textColor="@color/black"
         android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
@@ -108,5 +111,6 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repeatPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/repeatPassword"
+        android:onClick="onRegistration"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

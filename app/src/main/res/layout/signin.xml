@@ -31,6 +31,7 @@
 
     <EditText
         android:id="@+id/SigninLogin"
+        android:textColor="@color/black"
         android:background="@drawable/radius_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,6 +59,7 @@
         android:id="@+id/SigninPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:background="@drawable/radius_button"
         android:layout_marginLeft="60dp"
         android:padding="10dp"

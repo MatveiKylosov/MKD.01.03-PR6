@@ -1,20 +1,23 @@
 package com.example.singin_kylosov;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
-import org.w3c.dom.Document;
-import org.w3c.dom.Text;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public class DataUser {
@@ -28,6 +31,47 @@ public class MainActivity extends AppCompatActivity {
         public String getLogin() { return this.login; }
         public void setPassword(String _password) { this.password = _password; }
         public String getPassword() { return this.password; }
+    }
+    ArrayList<DataUser> dataUser = new ArrayList<>();
+    class SetDataUser extends AsyncTask<Void, Void, Void> {
+        String body;
+        @Override
+        protected Void doInBackground(Void... params) {
+            Document doc_b = null;
+            try {
+                doc_b = Jsoup.connect("https://0pp0site.000webhostapp.com/regin.php?login=" + login + "&password=" + password).get();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (doc_b != null) {
+                body = doc_b.text();
+            } else body = "Ошибка!";
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (body.length() != 0) {
+                if (body.contains("0")) AlertDialog("Авторизация", "Пользователь с таким логином существует.");
+                else if (body.contains("1")) AlertDialog("Авторизация", "Пользователь успешно зарегистрирован.");
+            } else AlertDialog("Авторизация", "Ошибка данных.");
+        }
+    }
+    public void AlertDialog(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setCancelable(false)
+                .setNegativeButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
     class GetDataUser extends AsyncTask<Void, Void, Void> {
         String body;
@@ -140,30 +184,5 @@ public class MainActivity extends AppCompatActivity {
             SetDataUser sdu = new SetDataUser();
             sdu.execute();
         } else AlertDialog("Авторизация", "Пароли не совпадают");
-    }
-
-    class SetDataUser extends AsyncTask<Void, Void, Void> {
-        String body;
-        @Override
-        protected Void doInBackground(Void... params) {
-            Document doc_b = null;
-            try {
-                doc_b = Jsoup.connect("https://0pp0site.000webhostapp.com/regin.php?login=" + login + "&password=" + password).get();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (doc_b != null) {
-                body = doc_b.text();
-            } else body = "Ошибка!";
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            if (body.length() != 0) {
-                if (body.contains("0")) AlertDialog("Авторизация", "Пользователь с таким логином существует.");
-                else if (body.contains("1")) AlertDialog("Авторизация", "Пользователь успешно зарегистрирован.");
-            } else AlertDialog("Авторизация", "Ошибка данных.");
-        }
     }
 }
