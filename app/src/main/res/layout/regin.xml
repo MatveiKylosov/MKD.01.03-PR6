@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <EditText
-        android:id="@+id/login"
+        android:id="@+id/ReginLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
@@ -52,10 +52,10 @@
         android:text="Password:"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintTop_toBottomOf="@+id/ReginLogin" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/ReginPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
@@ -78,7 +78,7 @@
         android:text="Repeat Password:"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/ReginPassword" />
 
     <EditText
         android:id="@+id/repeatPassword"
