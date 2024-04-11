@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <EditText
-        android:id="@+id/login"
+        android:id="@+id/SigninLogin"
         android:background="@drawable/radius_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,10 +52,10 @@
         android:text="Password:"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintTop_toBottomOf="@+id/SigninLogin" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/SigninPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/radius_button"
@@ -83,7 +83,8 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/SigninPassword"
+        android:onClick="onAutorization"/>
 
     <TextView
         android:id="@+id/restoreAccount"
