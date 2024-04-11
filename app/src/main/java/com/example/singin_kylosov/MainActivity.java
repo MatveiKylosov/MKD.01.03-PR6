@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             Document doc_b = null;
             try {
-                doc_b = Jsoup.connect("https://0pp0site.000webhostapp.com/regin.php?login=" + login + "&password=" + password).get();
+                doc_b = Jsoup.connect("http://192.168.0.108/regin.php?login=" + login + "&password=" + password).get();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -78,14 +78,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             Document doc_b = null;
-            try {
-                doc_b = Jsoup.connect("https://0pp0site.000webhost.app.com/index.php?login=" + login + "&password=" + password).get();
+            try {doc_b = Jsoup.connect("http://192.168.0.108/index.php?login=" + login + "&password=" + password).get();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
             if (doc_b != null) {
                 body = doc_b.text();
-            } else body = "Ошибка!";
+                System.out.println(doc_b.text());
+            } else
+            {
+                body = "Ошибка!";
+            }
 
             return null;
         }
@@ -127,8 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onTouchEvent(MotionEvent event)
     {
-
-
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 start_x = (int)event.getX();
