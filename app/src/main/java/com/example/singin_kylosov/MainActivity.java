@@ -21,6 +21,13 @@ import java.util.ArrayList;
 import android.os.Environment;
 import java.io.File;
 import java.io.FileOutputStream;
+import android.content.Context;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import com.bumptech.glide.Glide;
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
     public class DataUser {
         public String id;
@@ -115,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
@@ -182,18 +188,63 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
     public  String login, password;
-    public void onAutorization(View view)
-    {
-        TextView tv_login = findViewById(R.id.SigninLogin);
-        login = tv_login.getText().toString();
 
-        TextView tv_password = findViewById(R.id.SigninPassword);
-        password = tv_password.getText().toString();
+    public interface CaptchaDialogCallback {
+        void onCaptchaDialogResult(boolean isCaptchaCorrect);
+    }
 
-        GetDataUser gdu = new GetDataUser();
-        gdu.execute();
+    public void showCaptchaDialog(CaptchaDialogCallback callback) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Введите капчу");
+
+        LinearLayout layout = new LinearLayout(MainActivity.this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final ImageView captchaImage = new ImageView(MainActivity.this);
+        String[] images = {"smwm", "V4XBg"};
+        String baseUrl = "http://192.168.0.108/";
+        String randomImage = images[new Random().nextInt(images.length)];
+        Glide.with(MainActivity.this).load(baseUrl + randomImage + ".png").into(captchaImage);
+        layout.addView(captchaImage);
+
+        final EditText input = new EditText(MainActivity.this);
+        layout.addView(input);
+
+        builder.setView(layout);
+
+        builder.setPositiveButton("OK", (dialog, whichButton) -> {
+            String captchaInput = input.getText().toString();
+            if (randomImage.equals(captchaInput)) {
+                callback.onCaptchaDialogResult(true);
+            } else {
+                callback.onCaptchaDialogResult(false);
+            }
+        });
+        builder.setNegativeButton("Отмена", (dialog, whichButton) -> dialog.cancel());
+
+        builder.show();
+    }
+
+    public void onAutorization(View view) {
+        showCaptchaDialog(new CaptchaDialogCallback() {
+            @Override
+            public void onCaptchaDialogResult(boolean isCaptchaCorrect) {
+                if (!isCaptchaCorrect) {
+                    AlertDialog("Ошибка", "Капча не была пройдена.");
+                    return;
+                }
+
+                TextView tv_login = findViewById(R.id.SigninLogin);
+                login = tv_login.getText().toString();
+
+                TextView tv_password = findViewById(R.id.SigninPassword);
+                password = tv_password.getText().toString();
+
+                GetDataUser gdu = new GetDataUser();
+                gdu.execute();
+            }
+        });
     }
     public void onRegistration(View view) {
         TextView tv_login = findViewById(R.id.ReginLogin);
